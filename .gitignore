@@ -1,0 +1,5 @@
+web-api/node_modules
+web-app/node_modules
+web-api/dist
+web-app/dist
+*.swp

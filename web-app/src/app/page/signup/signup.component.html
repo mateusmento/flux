@@ -1,0 +1,49 @@
+<div class="container">
+
+  <form [formGroup]="userForm" (submit)="onSubmit()">
+
+    <h3>Sign Up</h3>
+
+    <div *ngIf="signupError" class="alert alert-danger">{{signupErrorMsg}}</div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" class="form-control" [class.is-invalid]="errors('name')" formControlName="name">
+      <small *ngIf="errors('name')?.required" class="invalid-feedback">Name is required</small>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" class="form-control" [class.is-invalid]="errors('username') || !isUsernameUnique" (blur)="checkForUsernameUniqueness()" formControlName="username">
+      <small *ngIf="errors('username')?.required" class="invalid-feedback">Username is required</small>
+      <small *ngIf="!isUsernameUnique" class="invalid-feedback">Username already exists</small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" id="email" class="form-control" [class.is-invalid]="errors('email') || !isEmailUnique" (blur)="checkForEmailUniqueness()" formControlName="email">
+      <small *ngIf="errors('email')?.required" class="invalid-feedback">Email is required</small>
+      <small *ngIf="errors('email')?.email" class="invalid-feedback">Email is not valid</small>
+      <small *ngIf="!isEmailUnique" class="invalid-feedback">Email already exists</small>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control" [class.is-invalid]="errors('password')" formControlName="password">
+      <small *ngIf="errors('password')?.required" class="invalid-feedback">Password is required</small>
+      <small *ngIf="errors('password')?.minlength" class="invalid-feedback">Password must have atleast {{PWD_MIN_CHAR}} characters</small>
+      <small *ngIf="errors('password')?.maxlength" class="invalid-feedback">Password can not have more than {{PWD_MAX_CHAR}} characters</small>
+    </div>
+
+    <div class="form-group">
+      <label for="repassword">Repassword</label>
+      <input type="password" id="repassword" class="form-control" [class.is-invalid]="errors('repassword')" formControlName="repassword">
+      <small *ngIf="errors('repassword')?.required" class="invalid-feedback">You must confirm your password</small>
+      <small *ngIf="userForm.errors?.confirmPassword" class="invalid-feedback">Passwords don't match</small>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+
+  </form>
+
+</div>
